@@ -25,7 +25,7 @@
                     class="flex items-center gap-2 text-white px-4 py-2 hover:bg-zinc-800 rounded w-full"
                 >
                     <router-link
-                        to="/my-tasks"
+                        to="/tasks"
                         class="flex items-center gap-2 w-full"
                     >
                         <CheckSquare class="h-4 w-4" />

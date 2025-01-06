@@ -48,11 +48,11 @@
             <div
                 class="grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 text-sm font-medium"
             >
-                <div class="col-span-4">Task name</div>
-                <div class="col-span-2">Due date</div>
-                <div class="col-span-2">Collaborators</div>
+                <div class="col-span-4">Name</div>
+                <div class="col-span-2">Due Date</div>
+                <div class="col-span-2">Assignee</div>
                 <div class="col-span-2">Projects</div>
-                <div class="col-span-2">Task visibility</div>
+                <div class="col-span-2">Status</div>
             </div>
 
             <!-- Table body: loop over tasks -->
@@ -70,7 +70,7 @@
 
                     <!-- Due date -->
                     <div class="col-span-2 text-sm text-gray-600">
-                        {{ task.dueDate }}
+                        {{ task.due_date }}
                     </div>
 
                     <!-- Assignee (avatar) -->
@@ -93,7 +93,7 @@
 
                     <!-- Visibility -->
                     <div class="col-span-2 text-sm text-gray-600">
-                        {{ task.visibility }}
+                        {{ task.status }}
                     </div>
                 </div>
             </div>
@@ -125,36 +125,25 @@ import {
 } from "lucide-vue-next";
 
 // Reactive tasks array
-const tasks = ref([
-    {
-        id: 1,
-        title: "Automatic mailers for Payment Made",
-        dueDate: "Nov 29, 2024",
-        project: "Lilypay",
-        visibility: "Personal",
-    },
-    {
-        id: 2,
-        title: "Follow up with Laura Williams at Firefly",
-        dueDate: "Dec 2, 2024",
-        visibility: "Only me",
-    },
-    {
-        id: 3,
-        title: "AI Obituary",
-        dueDate: "Dec 20, 2024",
-        project: "Lilypay",
-        visibility: "Personal",
-    },
-    {
-        id: 4,
-        title: "MyIAM Questionnaire Builder Design",
-        dueDate: "Dec 20, 2024",
-        project: "Darren",
-        visibility: "Personal",
-        assignee: "D",
-    },
-]);
+import { onMounted } from "vue";
+
+let tasks = ref([]);
+
+// Function to fetch tasks from the API
+const fetchTasks = async () => {
+    try {
+        const response = await fetch("/tasks");
+        const data = await response.json();
+        tasks.value = data;
+    } catch (error) {
+        console.error("Error fetching tasks:", error);
+    }
+};
+
+// Fetch tasks when component mounts
+onMounted(() => {
+    fetchTasks();
+});
 </script>
 
 <!-- 
