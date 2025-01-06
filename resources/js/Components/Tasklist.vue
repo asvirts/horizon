@@ -67,7 +67,28 @@
                 >
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
-                        <Checkbox />
+                        <Checkbox
+                            v-model="task.is_completed"
+                            @click="
+                                async () => {
+                                    try {
+                                        await axios.patch(
+                                            `/api/tasks/${task.id}`,
+                                            {
+                                                is_completed: task.is_completed,
+                                            }
+                                        );
+                                    } catch (error) {
+                                        console.error(
+                                            'Error updating task:',
+                                            error
+                                        );
+                                        // Revert the checkbox if the update fails
+                                        task.is_completed = !task.is_completed;
+                                    }
+                                }
+                            "
+                        />
                         <span>{{ task.title }}</span>
                     </div>
 
@@ -113,6 +134,7 @@ import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 import { Badge } from "@/Components/ui/badge";
 import { Checkbox } from "@/Components/ui/checkbox";
 import SearchBar from "@/Components/SearchBar.vue";
+import axios from "axios";
 
 function handleImageError() {
     document.getElementById("screenshot-container")?.classList.add("!hidden");
