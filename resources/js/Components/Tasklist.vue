@@ -98,15 +98,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Recurring tasks section -->
-        <div class="mt-8">
-            <h3 class="text-sm font-medium mb-4">Recurring</h3>
-            <Button variant="outline" class="gap-2">
-                <Plus class="h-4 w-4" />
-                Add task
-            </Button>
-        </div>
     </div>
 </template>
 
