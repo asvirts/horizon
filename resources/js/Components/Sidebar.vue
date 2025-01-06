@@ -1,4 +1,3 @@
-<!-- Sidebar.vue -->
 <template>
     <div class="flex h-screen">
         <div class="w-60 bg-zinc-900 text-white p-4 flex flex-col h-full">

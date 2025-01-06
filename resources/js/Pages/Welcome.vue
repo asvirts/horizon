@@ -1,6 +1,8 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
 import Sidebar from "@/Components/Sidebar.vue";
+import TaskList from "@/Components/Tasklist.vue";
+
 defineProps({
     canLogin: {
         type: Boolean,
@@ -27,10 +29,10 @@ function handleImageError() {
 </script>
 
 <template>
-    <div class="flex">
+    <div className="flex h-screen bg-background">
         <Sidebar />
-        <div class="flex flex-col items-center justify-center h-screen flex-1">
-            <h1 class="text-4xl font-bold">Welcome to Horizon</h1>
-        </div>
+        <main className="flex-1 overflow-auto">
+            <TaskList />
+        </main>
     </div>
 </template>
