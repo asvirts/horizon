@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('/api/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::patch('/api/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 Route::post('/api/tasks', [TaskController::class, 'store'])->name('tasks.store');
-
+Route::post('/api/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::get('/tasks', function () {
     return Inertia::render('Tasks', [
         'canLogin' => Route::has('login'),

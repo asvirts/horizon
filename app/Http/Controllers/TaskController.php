@@ -20,9 +20,12 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $title)
     {
-        //
+        $task = new Task();
+        $task->title = $title;
+        $task->save();
+        return response()->json($task);
     }
 
     /**

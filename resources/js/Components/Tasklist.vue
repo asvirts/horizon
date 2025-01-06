@@ -36,7 +36,7 @@
 
         <!-- Add task button -->
         <div class="mb-4">
-            <Button variant="outline" class="gap-2">
+            <Button variant="outline" class="gap-2" @click="createTask">
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
@@ -176,6 +176,13 @@ const fetchTasks = async () => {
 onMounted(() => {
     fetchTasks();
 });
+
+const createTask = async () => {
+    await axios.post("/api/tasks/create", {
+        title: "New Task",
+    });
+    fetchTasks();
+};
 </script>
 
 <!-- 
