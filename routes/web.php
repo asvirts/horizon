@@ -15,6 +15,7 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/api/tasks', [TaskController::class, 'index'])->name('tasks.index');
 Route::get('/tasks', function () {
     return Inertia::render('Tasks', [
         'canLogin' => Route::has('login'),
@@ -23,8 +24,6 @@ Route::get('/tasks', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -5,7 +5,7 @@
             <div class="flex items-center gap-2">
                 <!-- Avatar -->
                 <Avatar class="h-8 w-8">
-                    <AvatarFallback>MT</AvatarFallback>
+                    <AvatarFallback>AV</AvatarFallback>
                 </Avatar>
                 <!-- Title -->
                 <h1 class="text-xl font-semibold">My tasks</h1>
@@ -55,8 +55,11 @@
                 <div class="col-span-2">Status</div>
             </div>
 
+            <!-- Loading state -->
+            <div v-if="!tasks.length" class="p-4 text-gray-500">Loading...</div>
+
             <!-- Table body: loop over tasks -->
-            <div class="divide-y">
+            <div v-else class="divide-y">
                 <div
                     v-for="task in tasks"
                     :key="task.id"
@@ -111,6 +114,13 @@ import { Badge } from "@/Components/ui/badge";
 import { Checkbox } from "@/Components/ui/checkbox";
 import SearchBar from "@/Components/SearchBar.vue";
 
+function handleImageError() {
+    document.getElementById("screenshot-container")?.classList.add("!hidden");
+    document.getElementById("docs-card")?.classList.add("!row-span-1");
+    document.getElementById("docs-card-content")?.classList.add("!flex-row");
+    document.getElementById("background")?.classList.add("!hidden");
+}
+
 // Import icons from lucide-vue (or any other Vue Lucide library)
 import {
     LayoutGrid,
@@ -132,7 +142,7 @@ let tasks = ref([]);
 // Function to fetch tasks from the API
 const fetchTasks = async () => {
     try {
-        const response = await fetch("/tasks");
+        const response = await fetch("/api/tasks");
         const data = await response.json();
         tasks.value = data;
     } catch (error) {
