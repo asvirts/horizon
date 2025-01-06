@@ -11,6 +11,7 @@
                 <h1 class="text-xl font-semibold">My tasks</h1>
                 <ChevronDown class="h-4 w-4 text-gray-500" />
             </div>
+            <SearchBar />
         </div>
 
         <!-- View Toggles (List, Board, Calendar, Files, etc.) -->
@@ -117,6 +118,7 @@ import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 import { Badge } from "@/Components/ui/badge";
 import { Checkbox } from "@/Components/ui/checkbox";
+import SearchBar from "@/Components/SearchBar.vue";
 
 // Import icons from lucide-vue (or any other Vue Lucide library)
 import {
