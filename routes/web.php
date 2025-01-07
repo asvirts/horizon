@@ -22,7 +22,7 @@ Route::get('/tasks', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'tasks' => Task::all(),
+        'tasks' => Task::orderBy('due_date', 'asc')->get(),
     ]);
 });
 
