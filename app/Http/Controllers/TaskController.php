@@ -60,6 +60,7 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->validated());
+        $task->update(['is_completed' => request('is_completed')]);
         return response()->json($task);
     }
 

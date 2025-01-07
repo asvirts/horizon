@@ -72,8 +72,8 @@
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
                         <Checkbox
-                            @update:modelValue="deleteTask(task.id)"
-                            :modelValue="false"
+                            @update:modelValue="completeTask(task.id)"
+                            :modelValue="task.is_completed"
                         />
                         <span>{{ task.title }}</span>
                     </div>
@@ -235,8 +235,8 @@ import {
 } from "lucide-vue-next";
 import { ref } from "vue";
 
-function deleteTask(taskId: number) {
-    router.delete(`/tasks/${taskId}`, {
+function completeTask(taskId: number) {
+    router.patch(`/tasks/${taskId}/complete`, {
         onSuccess: () => {
             // The page will automatically refresh due to Inertia.js
         },

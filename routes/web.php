@@ -47,6 +47,11 @@ Route::delete('/tasks/{task}', function (Task $task) {
     return redirect('/tasks');
 });
 
+Route::patch('/tasks/{task}/complete', function (Task $task) {
+    $task->update(['is_completed' => true]);
+    return redirect('/tasks');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
