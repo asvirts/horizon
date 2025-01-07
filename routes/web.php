@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TaskController;
+use App\Models\Task;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -12,19 +12,17 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'tasks' => Task::all(),
     ]);
 });
 
-Route::get('/api/tasks', [TaskController::class, 'index'])->name('tasks.index');
-Route::patch('/api/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-Route::post('/api/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::post('/api/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
 Route::get('/tasks', function () {
     return Inertia::render('Tasks', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'tasks' => Task::all(),
     ]);
 });
 

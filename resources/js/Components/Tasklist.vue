@@ -36,7 +36,7 @@
 
         <!-- Add task button -->
         <div class="mb-4">
-            <Button variant="outline" class="gap-2" @click="createTask">
+            <Button variant="outline" class="gap-2">
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
@@ -67,28 +67,7 @@
                 >
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
-                        <Checkbox
-                            v-model="task.is_completed"
-                            @click="
-                                async () => {
-                                    try {
-                                        await axios.patch(
-                                            `/api/tasks/${task.id}`,
-                                            {
-                                                is_completed: task.is_completed,
-                                            }
-                                        );
-                                    } catch (error) {
-                                        console.error(
-                                            'Error updating task:',
-                                            error
-                                        );
-                                        // Revert the checkbox if the update fails
-                                        task.is_completed = !task.is_completed;
-                                    }
-                                }
-                            "
-                        />
+                        <Checkbox />
                         <span>{{ task.title }}</span>
                     </div>
 
@@ -126,15 +105,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 // Import your Vue-based UI components
 import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 import { Badge } from "@/Components/ui/badge";
 import { Checkbox } from "@/Components/ui/checkbox";
 import SearchBar from "@/Components/SearchBar.vue";
-import axios from "axios";
+
+interface Task {
+    id: number;
+    title: string;
+    description?: string;
+    status: string;
+    start_date?: string;
+    end_date?: string;
+    is_completed: boolean;
+    due_date: string | null;
+    assignee: string | null;
+    created_at: string;
+    updated_at: string;
+
+    // Relationships
+    project?: {
+        id: number;
+        name: string;
+    };
+    users?: Array<{
+        id: number;
+        name: string;
+        email: string;
+    }>;
+    comments?: Array<{
+        id: number;
+        content: string;
+    }>;
+    tags?: Array<{
+        id: number;
+        name: string;
+    }>;
+}
+
+defineProps<{
+    tasks: Task[];
+}>();
 
 function handleImageError() {
     document.getElementById("screenshot-container")?.classList.add("!hidden");
@@ -148,41 +161,9 @@ import {
     LayoutGrid,
     Calendar,
     Files,
-    Filter,
-    SortAsc,
-    Users,
-    Settings,
     ChevronDown,
     Plus,
 } from "lucide-vue-next";
-
-// Reactive tasks array
-import { onMounted } from "vue";
-
-let tasks = ref([]);
-
-// Function to fetch tasks from the API
-const fetchTasks = async () => {
-    try {
-        const response = await fetch("/api/tasks");
-        const data = await response.json();
-        tasks.value = data;
-    } catch (error) {
-        console.error("Error fetching tasks:", error);
-    }
-};
-
-// Fetch tasks when component mounts
-onMounted(() => {
-    fetchTasks();
-});
-
-const createTask = async () => {
-    await axios.post("/api/tasks/create", {
-        title: "New Task",
-    });
-    fetchTasks();
-};
 </script>
 
 <!-- 

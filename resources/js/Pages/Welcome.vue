@@ -1,7 +1,7 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
 import Sidebar from "@/Components/Sidebar.vue";
-import TaskList from "@/Components/Tasklist.vue";
+import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 
 function handleImageError() {
     document.getElementById("screenshot-container")?.classList.add("!hidden");
@@ -9,9 +9,17 @@ function handleImageError() {
     document.getElementById("docs-card-content")?.classList.add("!flex-row");
     document.getElementById("background")?.classList.add("!hidden");
 }
+
+defineProps({
+    user: Object,
+    tasks: Array,
+    projects: Array,
+    clients: Array,
+});
 </script>
 
 <template>
+    <Head title="Welcome" />
     <div className="flex h-screen bg-background">
         <Sidebar />
         <main className="flex-1 overflow-auto">
@@ -20,12 +28,16 @@ function handleImageError() {
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-2">
                         <!-- Avatar -->
-                        <Avatar class="h-8 w-8">
+                        <Avatar
+                            class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center"
+                        >
                             <AvatarFallback>AV</AvatarFallback>
                         </Avatar>
                         <!-- Title -->
                         <h1 class="text-xl font-semibold">Welcome, Andrew</h1>
-                        <ChevronDown class="h-4 w-4 text-gray-500" />
+                        <p class="text-gray-500 ml-2">
+                            ({{ tasks?.length || 0 }} Tasks)
+                        </p>
                     </div>
                     <SearchBar />
                 </div>
