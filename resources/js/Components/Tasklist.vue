@@ -36,35 +36,10 @@
 
         <!-- Add task button -->
         <div class="mb-4">
-            <Button
-                variant="outline"
-                class="gap-2"
-                @click="
-                    $inertia.post('/tasks', {
-                        title: newTaskTitle,
-                        due_date: new Date().toISOString(),
-                        status: 'Assigned',
-                        assignee: 'AV',
-                    })
-                "
-            >
+            <Button variant="outline" class="gap-2" @click="showModal = true">
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
-            <input
-                type="text"
-                placeholder="New task..."
-                class="border rounded-md p-2"
-                v-model="newTaskTitle"
-                @keyup.enter="
-                    $inertia.post('/tasks', {
-                        title: newTaskTitle,
-                        due_date: new Date().toISOString(),
-                        status: 'Assigned',
-                        assignee: 'AV',
-                    })
-                "
-            />
         </div>
 
         <!-- Task table -->
@@ -127,6 +102,51 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <Modal :show="showModal" @close="showModal = false">
+        <div class="p-6 flex flex-col gap-4">
+            <h1 class="text-xl font-semibold">Add task</h1>
+            <Input
+                type="text"
+                placeholder="Title"
+                v-model="newTaskTitle"
+                @input="(e) => (newTaskTitle = e.target.value)"
+                required
+            />
+            <Input
+                type="text"
+                placeholder="Due date"
+                v-model="newTaskDueDate"
+                @input="(e) => (newTaskDueDate = e.target.value)"
+                required
+            />
+            <Input
+                type="text"
+                placeholder="Assignee"
+                v-model="newTaskAssignee"
+                @input="(e) => (newTaskAssignee = e.target.value)"
+                required
+            />
+            <Input
+                type="text"
+                placeholder="Project"
+                v-model="newTaskProject"
+                @input="(e) => (newTaskProject = e.target.value)"
+                required
+            />
+            <Input
+                type="text"
+                placeholder="Status"
+                v-model="newTaskStatus"
+                @input="(e) => (newTaskStatus = e.target.value)"
+                required
+            />
+            <Button class="w-full" variant="outline" @click="createTask">
+                Submit
+            </Button>
+        </div>
+    </Modal>
 </template>
 
 <script setup lang="ts">
@@ -136,6 +156,8 @@ import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 import { Badge } from "@/Components/ui/badge";
 import { Checkbox } from "@/Components/ui/checkbox";
 import SearchBar from "@/Components/SearchBar.vue";
+import Modal from "@/Components/Modal.vue";
+import { router } from "@inertiajs/vue3";
 
 interface Task {
     id: number;
@@ -174,7 +196,30 @@ defineProps<{
     tasks: Task[];
 }>();
 
-const newTaskTitle = ref("New task...");
+const showModal = ref(false);
+const newTaskTitle = ref("");
+const newTaskDueDate = ref("");
+const newTaskAssignee = ref("");
+const newTaskProject = ref("");
+const newTaskStatus = ref("");
+
+function createTask() {
+    router.post("/tasks", {
+        title: newTaskTitle.value,
+        due_date: newTaskDueDate.value,
+        assignee: newTaskAssignee.value,
+        project: newTaskProject.value,
+        status: newTaskStatus.value,
+    });
+
+    // Clear form and close modal
+    newTaskTitle.value = "";
+    newTaskDueDate.value = "";
+    newTaskAssignee.value = "";
+    newTaskProject.value = "";
+    newTaskStatus.value = "";
+    showModal.value = false;
+}
 
 function handleImageError() {
     document.getElementById("screenshot-container")?.classList.add("!hidden");
