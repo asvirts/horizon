@@ -41,7 +41,7 @@
                 class="gap-2"
                 @click="
                     $inertia.post('/tasks', {
-                        title: 'New Task',
+                        title: newTaskTitle,
                         due_date: new Date().toISOString(),
                         status: 'Assigned',
                         assignee: 'AV',
@@ -51,6 +51,20 @@
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
+            <input
+                type="text"
+                placeholder="New task..."
+                class="border rounded-md p-2"
+                v-model="newTaskTitle"
+                @keyup.enter="
+                    $inertia.post('/tasks', {
+                        title: newTaskTitle,
+                        due_date: new Date().toISOString(),
+                        status: 'Assigned',
+                        assignee: 'AV',
+                    })
+                "
+            />
         </div>
 
         <!-- Task table -->
@@ -160,6 +174,8 @@ defineProps<{
     tasks: Task[];
 }>();
 
+const newTaskTitle = ref("New task...");
+
 function handleImageError() {
     document.getElementById("screenshot-container")?.classList.add("!hidden");
     document.getElementById("docs-card")?.classList.add("!row-span-1");
@@ -175,6 +191,7 @@ import {
     ChevronDown,
     Plus,
 } from "lucide-vue-next";
+import { ref } from "vue";
 </script>
 
 <!-- 
