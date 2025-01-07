@@ -146,13 +146,6 @@
                 @input="(e) => (newTaskProject = e.target.value)"
                 required
             />
-            <Input
-                type="text"
-                placeholder="Status"
-                v-model="newTaskStatus"
-                @input="(e) => (newTaskStatus = e.target.value)"
-                required
-            />
             <Button class="w-full" variant="outline" @click="createTask">
                 Submit
             </Button>
@@ -212,7 +205,6 @@ const newTaskTitle = ref("");
 const newTaskDueDate = ref("");
 const newTaskAssignee = ref("");
 const newTaskProject = ref("");
-const newTaskStatus = ref("");
 
 function createTask() {
     router.post("/tasks", {
@@ -220,7 +212,6 @@ function createTask() {
         due_date: newTaskDueDate.value,
         assignee: newTaskAssignee.value,
         project: newTaskProject.value,
-        status: newTaskStatus.value,
     });
 
     // Clear form and close modal
@@ -228,7 +219,6 @@ function createTask() {
     newTaskDueDate.value = "";
     newTaskAssignee.value = "";
     newTaskProject.value = "";
-    newTaskStatus.value = "";
     showModal.value = false;
 }
 
