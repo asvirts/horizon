@@ -9,7 +9,7 @@ const searchQuery = ref("");
 <template>
     <div class="relative">
         <div
-            class="flex items-center border rounded-lg px-3 py-2 gap-2 hover:border-gray-400 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20"
+            class="flex items-center border rounded-lg px-3 py-2 gap-2 bg-zinc-300 hover:border-gray-400 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20"
         >
             <Search class="h-4 w-4 text-gray-500" />
             <input
