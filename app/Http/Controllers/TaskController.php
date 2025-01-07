@@ -22,10 +22,12 @@ class TaskController extends Controller
      */
     public function create(string $title)
     {
-        $task = new Task();
-        $task->title = $title;
-        $task->save();
-        return response()->json($task);
+        Task::create([
+            'title' => $title,
+            'due_date' => now(),
+            'status' => 'Assigned',
+            'assignee' => 'AV',
+        ]);
     }
 
     /**

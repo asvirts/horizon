@@ -36,7 +36,18 @@
 
         <!-- Add task button -->
         <div class="mb-4">
-            <Button variant="outline" class="gap-2">
+            <Button
+                variant="outline"
+                class="gap-2"
+                @click="
+                    $inertia.post('/tasks', {
+                        title: 'New Task',
+                        due_date: new Date().toISOString(),
+                        status: 'Assigned',
+                        assignee: 'AV',
+                    })
+                "
+            >
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>

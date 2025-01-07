@@ -26,6 +26,21 @@ Route::get('/tasks', function () {
     ]);
 });
 
+Route::post('/tasks', function () {
+    $task = new Task();
+    $task->title = request('title');
+    $task->due_date = request('due_date');
+    $task->status = request('status');
+    $task->assignee = request('assignee');
+    $task->priority = 'Test';
+    $task->category = 'Test';
+    $task->reporter = 'Test';
+    $task->project = 'Test';
+
+    $task->save();
+    return redirect('/tasks');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
