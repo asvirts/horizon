@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
-import Sidebar from "@/Components/Sidebar.vue";
+import Dock from "@/Components/Dock.vue";
 import { Avatar, AvatarFallback } from "@/Components/ui/avatar";
 
 function handleImageError() {
@@ -21,7 +21,7 @@ defineProps({
 <template>
     <Head title="Welcome" />
     <div className="flex h-screen bg-background">
-        <Sidebar />
+        <Dock />
         <main className="flex-1 overflow-auto">
             <div class="p-6 flex-1">
                 <!-- Header section -->

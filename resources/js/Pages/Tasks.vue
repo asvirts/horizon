@@ -1,6 +1,6 @@
 <script setup>
 import Tasklist from "@/Components/Tasklist.vue";
-import Sidebar from "@/Components/Sidebar.vue";
+import Dock from "@/Components/Dock.vue";
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
@@ -10,7 +10,7 @@ defineProps({
 
 <template>
     <div className="flex h-screen bg-background">
-        <Sidebar />
+        <Dock />
         <main className="flex-1 overflow-auto">
             <div class="min-h-screen bg-gray-100">
                 <Tasklist :tasks="tasks" />
