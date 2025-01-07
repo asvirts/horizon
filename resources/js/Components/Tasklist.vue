@@ -39,12 +39,8 @@
         </div>
 
         <!-- Add task button -->
-        <div class="mb-4">
-            <Button
-                variant="outline"
-                class="gap-2 bg-white"
-                @click="showModal = true"
-            >
+        <div class="mb-4 flex">
+            <Button variant="outline" class="gap-2 bg-white" @click="openModal">
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
@@ -246,6 +242,15 @@ function deleteTask(taskId: number) {
         },
     });
 }
+
+const openModal = () => {
+    showModal.value = true;
+};
+
+// Expose the method to parent components
+defineExpose({
+    openModal,
+});
 </script>
 
 <!-- 

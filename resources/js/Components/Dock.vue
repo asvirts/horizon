@@ -6,18 +6,20 @@
         </div>
 
         <!-- Dock -->
-        <div class="fixed bottom-0 left-0 right-0 flex justify-center p-4">
+        <div class="fixed bottom-0 left-0 right-0 flex justify-center p-8">
             <div
                 class="bg-zinc-900/80 backdrop-blur-md rounded-2xl p-2 flex items-center gap-2"
             >
                 <!-- Create Button -->
-                <button class="group flex flex-col items-center">
-                    <router-link
-                        to="/"
+                <button
+                    class="group flex flex-col items-center"
+                    @click="showModal = true"
+                >
+                    <div
                         class="p-3 rounded-xl hover:bg-zinc-800 transition-all duration-200 group-hover:scale-110"
                     >
                         <Plus class="h-6 w-6 text-white" />
-                    </router-link>
+                    </div>
                     <span
                         class="text-xs opacity-0 group-hover:opacity-100 transition-opacity absolute -top-6"
                         >Create</span

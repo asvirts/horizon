@@ -22,7 +22,8 @@ Route::get('/tasks', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'tasks' => Task::orderBy('due_date', 'asc')->get(),
+        'tasks' => Task::where('is_completed', false)->orderBy('due_date', 'asc')->get(),
+        'completed' => Task::where('is_completed', true)->get(),
     ]);
 });
 
