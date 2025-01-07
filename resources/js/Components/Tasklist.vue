@@ -4,19 +4,23 @@
         <div class="flex items-center justify-between mb-6">
             <div class="flex items-center gap-2">
                 <!-- Avatar -->
-                <Avatar class="h-8 w-8">
+                <Avatar
+                    class="h-8 w-8 bg-white border border-gray-200 flex items-center justify-center"
+                >
                     <AvatarFallback>AV</AvatarFallback>
                 </Avatar>
                 <!-- Title -->
                 <h1 class="text-xl font-semibold">My tasks</h1>
-                <ChevronDown class="h-4 w-4 text-gray-500" />
+                <p class="text-gray-500 ml-2">
+                    ({{ tasks?.length || 0 }} Tasks)
+                </p>
             </div>
             <SearchBar />
         </div>
 
         <!-- View Toggles (List, Board, Calendar, Files, etc.) -->
         <div class="flex items-center gap-4 mb-6">
-            <Button variant="outline" class="gap-2"> List </Button>
+            <Button variant="outline" class="gap-2 bg-white"> List </Button>
             <Button variant="ghost" class="gap-2">
                 <LayoutGrid class="h-4 w-4" />
                 Board
@@ -36,7 +40,11 @@
 
         <!-- Add task button -->
         <div class="mb-4">
-            <Button variant="outline" class="gap-2" @click="showModal = true">
+            <Button
+                variant="outline"
+                class="gap-2 bg-white"
+                @click="showModal = true"
+            >
                 <Plus class="h-4 w-4" />
                 Add task
             </Button>
@@ -46,7 +54,7 @@
         <div class="border rounded-lg">
             <!-- Table header -->
             <div
-                class="grid grid-cols-12 gap-4 p-4 border-b bg-gray-50 text-sm font-medium"
+                class="grid grid-cols-12 gap-4 p-4 border-b bg-gray-100 text-sm font-medium"
             >
                 <div class="col-span-4">Name</div>
                 <div class="col-span-2">Due Date</div>
@@ -63,11 +71,14 @@
                 <div
                     v-for="task in tasks"
                     :key="task.id"
-                    class="grid grid-cols-12 gap-4 p-4 items-center hover:bg-gray-50"
+                    class="grid grid-cols-12 gap-4 p-4 items-center bg-white hover:bg-gray-50"
                 >
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
-                        <Checkbox />
+                        <Checkbox
+                            @update:modelValue="deleteTask(task.id)"
+                            :modelValue="false"
+                        />
                         <span>{{ task.title }}</span>
                     </div>
 
@@ -237,6 +248,14 @@ import {
     Plus,
 } from "lucide-vue-next";
 import { ref } from "vue";
+
+function deleteTask(taskId: number) {
+    router.delete(`/tasks/${taskId}`, {
+        onSuccess: () => {
+            // The page will automatically refresh due to Inertia.js
+        },
+    });
+}
 </script>
 
 <!-- 

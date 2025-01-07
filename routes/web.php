@@ -41,6 +41,11 @@ Route::post('/tasks', function () {
     return redirect('/tasks');
 });
 
+Route::delete('/tasks/{task}', function (Task $task) {
+    $task->delete();
+    return redirect('/tasks');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
