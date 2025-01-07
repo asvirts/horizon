@@ -20,9 +20,9 @@ defineProps({
 
 <template>
     <Head title="Welcome" />
-    <div className="flex h-screen bg-background">
+    <div className="flex bg-background">
         <Dock />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto max-w-[1400px] mx-auto">
             <div class="p-6 flex-1">
                 <!-- Header section -->
                 <div class="flex items-center justify-between mb-6">

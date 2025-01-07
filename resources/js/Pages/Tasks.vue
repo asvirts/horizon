@@ -9,9 +9,9 @@ defineProps({
 </script>
 
 <template>
-    <div className="flex h-screen bg-background">
+    <div className="flex justify-center bg-background">
         <Dock />
-        <main className="flex-1 overflow-auto">
+        <main className="flex-1 overflow-auto max-w-[1400px] text-center">
             <div class="min-h-screen bg-gray-100">
                 <Tasklist :tasks="tasks" />
             </div>
