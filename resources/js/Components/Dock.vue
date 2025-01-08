@@ -73,7 +73,7 @@
                 <div class="w-px h-8 bg-zinc-700/50"></div>
 
                 <!-- Insights Section Icons -->
-                <button class="group flex flex-col items-center">
+                <button class="group flex flex-col items-center hidden md:flex">
                     <router-link
                         to="/reporting"
                         class="p-3 rounded-xl hover:bg-zinc-800 transition-all duration-200 group-hover:scale-110"
@@ -86,7 +86,7 @@
                     >
                 </button>
 
-                <button class="group flex flex-col items-center">
+                <button class="group flex flex-col items-center hidden md:flex">
                     <router-link
                         to="/portfolios"
                         class="p-3 rounded-xl hover:bg-zinc-800 transition-all duration-200 group-hover:scale-110"
@@ -99,7 +99,7 @@
                     >
                 </button>
 
-                <button class="group flex flex-col items-center">
+                <button class="group flex flex-col items-center hidden md:flex">
                     <router-link
                         to="/goals"
                         class="p-3 rounded-xl hover:bg-zinc-800 transition-all duration-200 group-hover:scale-110"
