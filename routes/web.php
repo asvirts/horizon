@@ -23,7 +23,7 @@ Route::get('/tasks', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'tasks' => Task::where('is_completed', false)->orderBy('due_date', 'asc')->get(),
-        'completed' => Task::where('is_completed', true)->get(),
+        'all' => Task::all(),
     ]);
 });
 

@@ -71,10 +71,7 @@
                 >
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
-                        <Checkbox
-                            @update:modelValue="completeTask(task.id)"
-                            :modelValue="task.is_completed"
-                        />
+                        <Checkbox :modelValue="task.is_completed" />
                         <span>{{ task.title }}</span>
                     </div>
 
@@ -234,14 +231,6 @@ import {
     Plus,
 } from "lucide-vue-next";
 import { ref } from "vue";
-
-function completeTask(taskId: number) {
-    router.patch(`/tasks/${taskId}/complete`, {
-        onSuccess: () => {
-            // The page will automatically refresh due to Inertia.js
-        },
-    });
-}
 
 const openModal = () => {
     showModal.value = true;

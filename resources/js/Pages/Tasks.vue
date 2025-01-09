@@ -5,7 +5,7 @@ defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     tasks: Array,
-    completed: Array,
+    all: Array,
 });
 </script>
 
@@ -15,7 +15,7 @@ defineProps({
         <main className="flex-1 overflow-auto max-w-[1400px] text-center">
             <div class="min-h-screen bg-gray-100">
                 <Tasklist :tasks="tasks" />
-                <Tasklist :tasks="completed" />
+                <CompletedTasks :tasks="all" />
             </div>
         </main>
     </div>
