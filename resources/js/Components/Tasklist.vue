@@ -12,7 +12,7 @@
                 <!-- Title -->
                 <h1 class="text-xl font-semibold">My tasks</h1>
                 <p class="text-gray-500 ml-2">
-                    ({{ tasks?.length || 0 }} Tasks)
+                    ({{ tasks?.length ?? 0 }} Tasks)
                 </p>
             </div>
             <SearchBar />
@@ -60,10 +60,12 @@
             </div>
 
             <!-- Loading state -->
-            <div v-if="!tasks.length" class="p-4 text-gray-500">Loading...</div>
+            <div v-if="!tasks || tasks.length === 0" class="p-4 text-gray-500">
+                {{ !tasks ? "Loading..." : "No tasks found" }}
+            </div>
 
             <!-- Table body: loop over tasks -->
-            <div v-else class="divide-y">
+            <div v-else-if="tasks.length > 0" class="divide-y">
                 <div
                     v-for="task in tasks"
                     :key="task.id"
@@ -71,7 +73,10 @@
                 >
                     <!-- Task name & Checkbox -->
                     <div class="col-span-4 flex items-center gap-3">
-                        <Checkbox :modelValue="task.is_completed" />
+                        <Checkbox
+                            :modelValue="task.is_completed"
+                            @click="completeTask(task.id)"
+                        />
                         <span>{{ task.title }}</span>
                     </div>
 
@@ -198,6 +203,7 @@ const newTaskTitle = ref("");
 const newTaskDueDate = ref("");
 const newTaskAssignee = ref("");
 const newTaskProject = ref("");
+const processing = ref(false);
 
 function createTask() {
     router.post("/tasks", {
@@ -231,6 +237,32 @@ import {
     Plus,
 } from "lucide-vue-next";
 import { ref } from "vue";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+    import.meta.env.VITE_SUPABASE_URL,
+    import.meta.env.VITE_SUPABASE_ANON_KEY
+);
+
+async function completeTask(taskId: number) {
+    if (processing.value) return;
+
+    processing.value = true;
+    try {
+        const { data, error } = await supabase
+            .from("tasks")
+            .update({ is_completed: true })
+            .eq("id", taskId)
+            .select();
+
+        if (error) throw error;
+
+        // Refresh the page to show updated data
+        router.reload();
+    } finally {
+        processing.value = false;
+    }
+}
 
 const openModal = () => {
     showModal.value = true;
