@@ -39,10 +39,18 @@
         </div>
 
         <!-- Add task button -->
-        <div class="mb-4 flex">
+        <div class="mb-4 flex justify-between">
             <Button variant="outline" class="gap-2 bg-white" @click="openModal">
                 <Plus class="h-4 w-4" />
                 Add task
+            </Button>
+            <Button
+                variant="outline"
+                class="gap-2 bg-white"
+                @click="showCompleted = !showCompleted"
+                :class="{ 'bg-gray-200': showCompleted }"
+            >
+                Show completed
             </Button>
         </div>
 
@@ -67,7 +75,7 @@
             <!-- Table body: loop over tasks -->
             <div v-else-if="tasks.length > 0" class="divide-y">
                 <div
-                    v-for="task in tasks"
+                    v-for="task in filteredTasks"
                     :key="task.id"
                     class="grid grid-cols-12 gap-4 p-4 items-center bg-white hover:bg-gray-50"
                 >
@@ -160,6 +168,7 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import SearchBar from "@/Components/SearchBar.vue";
 import Modal from "@/Components/Modal.vue";
 import { router } from "@inertiajs/vue3";
+import { ref, computed } from "vue";
 
 interface Task {
     id: number;
@@ -194,16 +203,25 @@ interface Task {
     }>;
 }
 
-defineProps<{
-    tasks: Task[];
-}>();
-
+const showCompleted = ref(false);
 const showModal = ref(false);
 const newTaskTitle = ref("");
 const newTaskDueDate = ref("");
 const newTaskAssignee = ref("");
 const newTaskProject = ref("");
 const processing = ref(false);
+
+const props = defineProps<{
+    tasks: Task[];
+}>();
+
+// Add computed property for filtered tasks
+const filteredTasks = computed(() => {
+    if (showCompleted.value) {
+        return props.tasks;
+    }
+    return props.tasks.filter((task) => !task.is_completed);
+});
 
 function createTask() {
     router.post("/tasks", {
@@ -236,7 +254,6 @@ import {
     ChevronDown,
     Plus,
 } from "lucide-vue-next";
-import { ref } from "vue";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
